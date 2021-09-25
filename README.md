@@ -1,2 +1,2 @@
 # ventas-frontend
-Frontend en ReacJS para software de ventas (Curso)
+Frontend en ReactJS para software de ventas (Curso)
