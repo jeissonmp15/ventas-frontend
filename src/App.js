@@ -1,24 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import Navbar from './components/Navbar';
+import Products from './components/Products';
+import React, { useEffect, useState } from 'react';
+
+
 
 function App() {
+
+  const [products, setproducts] = useState([]);
+
+  const initialUrl = 'http://localhost:3050/productos';
+  const fetchProducts = (url) => {
+    fetch(url)
+      .then(response => response.json())
+      .then(data => setproducts(data))
+      .catch(error => console.log(error))
+  };
+
+  useEffect(() => {
+    fetchProducts(initialUrl);
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Navbar />
+      <div className="container">
+        <Products products={products} />
+      </div>
+    </>
   );
 }
 
