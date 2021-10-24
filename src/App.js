@@ -1,32 +1,25 @@
-import Navbar from './components/Navbar';
-import Products from './components/Products';
-import React, { useEffect, useState } from 'react';
-
+import Login from './components/Login';
+import { BrowserRouter as Router, Link, Route, Redirect } from 'react-router-dom';
+import { useAuth0 } from "@auth0/auth0-react";
+import './App.scss'
+import Dashboard from "./components/Dashboard";
 
 
 function App() {
 
-  const [products, setproducts] = useState([]);
+  const {
+    isAuthenticated,
+  } = useAuth0();
 
-  const initialUrl = 'http://localhost:3050/productos';
-  const fetchProducts = (url) => {
-    fetch(url)
-      .then(response => response.json())
-      .then(data => setproducts(data))
-      .catch(error => console.log(error))
-  };
-
-  useEffect(() => {
-    fetchProducts(initialUrl);
-  }, [])
+  console.log('En el app', isAuthenticated)
 
   return (
-    <>
-      <Navbar />
-      <div className="container">
-        <Products products={products} />
+    <Router>
+      <div>
+        {/* {isAuthenticated ? <Redirect to="/dashboard" /> : <Login />} */}
+        {isAuthenticated ? <Dashboard /> : <Login />}
       </div>
-    </>
+    </Router>
   );
 }
 
